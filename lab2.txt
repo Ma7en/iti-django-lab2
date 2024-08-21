@@ -47,6 +47,31 @@ python manage.py createsuperuser
 // =======================================================================
 
 
+
+Account:-
+- account_id
+- username
+- password
+- email
+- created_at 
+
+
+Track:-
+- id
+- name
+- description 
+
+
+Trainee:-
+- id 
+- first_name 
+- last_name 
+- date_of_birth 
+- account_obj 
+- track_obj 
+
+
+
 su - postgres
 
 mazen@@1
