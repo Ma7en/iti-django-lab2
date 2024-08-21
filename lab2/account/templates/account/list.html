@@ -9,10 +9,11 @@
     <a href="{% url 'account_create' %}">Create</a>
 </div>
 
-<table>
+<table width="100%" border="1px solid #000">
     <thead>
         <tr>
             <th>ID</th>
+            <th>User Name</th>
             <th>Email</th>
             <th>pssword</th>
             <th>Actions</th>
@@ -20,15 +21,16 @@
     </thead>
 
     <tbody>
-        {%for account in accounts%}
+        {% for account in accounts %}
         <tr>
             <td>{{account.id}}</td>
+            <td>{{account.username}}</td>
             <td>{{account.email}}</td>
             <td>{{account.password}}</td>
             <td>
+                <a href="{%url 'account_details' account.id%}">Details</a>
                 <a href="{%url 'account_update' account.id%}">Update</a>
                 <a href="{%url 'account_delete' account.id%}">Delete</a>
-                <a href="{%url 'account_details' account.id%}">Details</a>
             </td>
         </tr>
         {%endfor%}

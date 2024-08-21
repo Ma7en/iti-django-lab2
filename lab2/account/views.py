@@ -58,10 +58,11 @@ def account_update(request, id):
 
 
 def account_delete(request, id):
+    print("----", request)
     context = {}
     try:
         accountobj = Account.objects.get(id=id)  # Fetch the account to be deleted
-        if request.method == "POST":
+        if request.method == "GET":
             accountobj.delete()
             return redirect("account_list")
         context["account"] = accountobj
