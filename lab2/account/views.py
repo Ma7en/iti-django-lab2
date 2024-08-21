@@ -54,11 +54,12 @@ def account_update(request, id):
         context["account"] = accountobj
     except Account.DoesNotExist:
         return HttpResponse("Account not found", status=404)
+
     return render(request, "account/update.html", context)
 
 
 def account_delete(request, id):
-    print("----", request)
+    # print("----", request)
     context = {}
     try:
         accountobj = Account.objects.get(id=id)  # Fetch the account to be deleted

@@ -12,12 +12,45 @@ def track_list(request):
 
 
 def track_create(request):
-    return render(request, "track/create.html")
+    context = {}
+    if request.method == "POST":
+        # validation on the server side
+        if (
+            len(request.POST["name"]) > 0
+            and len(request.POST["name"]) <= 100
+            and request.POST["description"]
+        ):
+            accountobj = Track()
+            accountobj.name = request.POST["name"]
+            accountobj.description = request.POST["description"]
+            accountobj.save()
+            return redirect("track_list")
+        else:
+            context["error"] = "Invalid data"
+
+    return render(request, "track/create.html", context)
 
 
 def track_update(request, id):
     context = {}
-    context = {"id": id}
+    try:
+        trackobj = Track.objects.get(id=id)  # Fetch the account to be updated
+        if request.method == "POST":
+            if (
+                len(request.POST["name"]) > 0
+                and len(request.POST["name"]) <= 100
+                and request.POST["description"]
+            ):
+                trackobj.name = request.POST["name"]
+                trackobj.description = request.POST["description"]
+                trackobj.save()
+                return redirect("track_list")
+            else:
+                context["error"] = "Invalid data"
+        context["track"] = trackobj
+    except Track.DoesNotExist:
+        return HttpResponse("Track not found", status=404)
+
     return render(request, "track/update.html", context)
 
 
@@ -27,10 +60,10 @@ def track_delete(request, id):
         trackobj = Track.objects.get(id=id)  # Fetch the trainee to be deleted
         if request.method == "GET":
             trackobj.delete()
-            return redirect("trainee_list")
-        context["trainee"] = trackobj
+            return redirect("track_list")
+        context["track"] = trackobj
     except Track.DoesNotExist:
-        return HttpResponse("Trainee not found", status=404)
+        return HttpResponse("track not found", status=404)
 
     return render(request, "track/delete.html", context)
 
