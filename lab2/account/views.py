@@ -36,7 +36,7 @@ def account_create(request):
 def account_update(request, id):
     context = {}
     try:
-        account = Account.objects.get(id=id)  # Fetch the account to be updated
+        accountobj = Account.objects.get(id=id)  # Fetch the account to be updated
         if request.method == "POST":
             if (
                 len(request.POST["username"]) > 0
@@ -44,14 +44,14 @@ def account_update(request, id):
                 and len(request.POST["password"]) <= 200
                 and request.POST["email"]
             ):
-                account.username = request.POST["username"]
-                account.email = request.POST["email"]
-                account.password = request.POST["password"]
-                account.save()
+                accountobj.username = request.POST["username"]
+                accountobj.email = request.POST["email"]
+                accountobj.password = request.POST["password"]
+                accountobj.save()
                 return redirect("account_list")
             else:
                 context["error"] = "Invalid data"
-        context["account"] = account
+        context["account"] = accountobj
     except Account.DoesNotExist:
         return HttpResponse("Account not found", status=404)
     return render(request, "account/update.html", context)
@@ -60,18 +60,18 @@ def account_update(request, id):
 def account_delete(request, id):
     context = {}
     try:
-        account = Account.objects.get(id=id)  # Fetch the account to be deleted
+        accountobj = Account.objects.get(id=id)  # Fetch the account to be deleted
         if request.method == "POST":
-            account.delete()
+            accountobj.delete()
             return redirect("account_list")
-        context["account"] = account
+        context["account"] = accountobj
     except Account.DoesNotExist:
         return HttpResponse("Account not found", status=404)
-    return render(request, "account/delete.html", context)
+    return render(request, "account/list.html", context)
 
 
 def account_details(request, id):
     context = {}
-    account = Account.objects.get(id=id)  # Fetch record from the database
-    context["account"] = account
+    accountobj = Account.objects.get(id=id)  # Fetch record from the database
+    context["account"] = accountobj
     return render(request, "account/details.html", context)

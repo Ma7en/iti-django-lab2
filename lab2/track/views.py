@@ -1,41 +1,42 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from .models import *
 
 
 # Create your views here.
 def track_list(request):
-    tracks = [
-        {"id": 1, "name": "python", "description": "track python"},
-        {"id": 2, "name": "java", "description": "track java"},
-        {"id": 3, "name": "c++", "description": "track c++"},
-    ]
     context = {}
+    tracks = Track.objects.all()
     context["tracks"] = tracks
     return render(request, "track/list.html", context)
-    # return HttpResponse("<h1>track List</h1>")
 
 
 def track_create(request):
-    # return HttpResponse("<h1>track create</h1>")
     return render(request, "track/create.html")
 
 
 def track_update(request, id):
-    # return HttpResponse("<h1>track update</h1>")
     context = {}
     context = {"id": id}
     return render(request, "track/update.html", context)
 
 
 def track_delete(request, id):
-    # return HttpResponse("<h1>track delete</h1>")
     context = {}
-    context = {"id": id}
+    try:
+        trackobj = Track.objects.get(id=id)  # Fetch the trainee to be deleted
+        if request.method == "GET":
+            trackobj.delete()
+            return redirect("trainee_list")
+        context["trainee"] = trackobj
+    except Track.DoesNotExist:
+        return HttpResponse("Trainee not found", status=404)
+
     return render(request, "track/delete.html", context)
 
 
 def track_details(request, id):
-    # return HttpResponse(f"<h1>track Details: {id}</h1>")
     context = {}
-    context = {"id": id}
+    trackobj = Track.objects.get(id=id)  # Fetch record from the database
+    context["track"] = trackobj
     return render(request, "track/details.html", context)

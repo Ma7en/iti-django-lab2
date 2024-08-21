@@ -11,7 +11,6 @@ def trainee_list(request):
     trainees = Trainee.objects.all()  # Fetch all records from the database
     context["trainees"] = trainees
     return render(request, "trainee/list.html", context)
-    # return HttpResponse("<h1>Trainee List</h1>")
 
 
 def trainee_create(request):
@@ -80,12 +79,11 @@ def trainee_delete(request, id):
     except Trainee.DoesNotExist:
         return HttpResponse("Trainee not found", status=404)
 
-    return render(request, "trainee/delete.html", context)
+    return render(request, "trainee/list.html", context)
 
 
 def trainee_details(request, id):
-
     context = {}
-    trainee = Trainee.objects.get(id=id)  # Fetch record from the database
-    context["account"] = trainee
+    traineeobj = Trainee.objects.get(id=id)  # Fetch record from the database
+    context["trainee"] = traineeobj
     return render(request, "trainee/details.html", context)
