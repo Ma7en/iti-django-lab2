@@ -8,8 +8,8 @@ from track.models import *
 # Create your views here.
 def trainee_list(request):
     context = {}
-    trainees = Trainee.objects.all()  # Fetch all records from the database
-    context["trainees"] = trainees
+    traineesobj = Trainee.objects.all()  # Fetch all records from the database
+    context["trainees"] = traineesobj
     return render(request, "trainee/list.html", context)
 
 
@@ -46,6 +46,12 @@ def trainee_create(request):
 def trainee_update(request, id):
 
     context = {}
+    accountsobj = Account.objects.all()  # Fetch all records from the database
+    context["accounts"] = accountsobj
+
+    tracksobj = Track.objects.all()  # Fetch all records from the database
+    context["tracks"] = tracksobj
+
     try:
         traineeobj = Trainee.objects.get(id=id)  # Fetch the account to be updated
     except Trainee.DoesNotExist:
@@ -56,8 +62,23 @@ def trainee_update(request, id):
         traineeobj.first_name = request.POST["first_name"]
         traineeobj.last_name = request.POST["last_name"]
         traineeobj.date_of_birth = request.POST["date_of_birth"]
-        traineeobj.account_obj = request.POST["account_obj"]
-        traineeobj.track_obj = request.POST["track_obj"]
+
+        # traineeobj.account_obj = request.POST["account_obj"]
+        # traineeobj.track_obj = request.POST["track_obj"]
+
+        # Link account and track objects
+        try:
+            account_obj = Account.objects.get(id=request.POST["account_obj"])
+            traineeobj.account_obj = account_obj
+        except Account.DoesNotExist:
+            return HttpResponse("Account not found", status=404)
+
+        try:
+            track_obj = Track.objects.get(id=request.POST["track_obj"])
+            traineeobj.track_obj = track_obj
+        except Track.DoesNotExist:
+            return HttpResponse("Track not found", status=404)
+
         traineeobj.save()
         return redirect("trainee_list")
 

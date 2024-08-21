@@ -9,33 +9,39 @@
     <a href="{% url 'trainee_create' %}">Create</a>
 </div>
 
-<table>
+<table width="100%" border="1px solid #000">
     <thead>
         <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Age</th>
-            <th>Department</th>
+
+            <th>First Name</th>
+            <th>Last Name</th>
+
+            <th>Date of Birth</th>
+
+            <th>Account Username</th>
+            <th>Track Name</th>
+
             <th>Actions</th>
         </tr>
     </thead>
 
     <tbody>
-        {%for trainee in trainees%}
+        {% for trainee in trainees %}
         <tr>
             <td>{{trainee.id}}</td>
-            <td>{{trainee.name}}</td>
-            <td>{{trainee.email}}</td>
-            <td>{{trainee.age}}</td>
-            <td>{{trainee.department}}</td>
+            <td>{{trainee.first_name}}</td>
+            <td>{{trainee.last_name}}</td>
+            <td>{{trainee.date_of_birth}}</td>
+            <td>{{trainee.account_obj.username}}</td>
+            <td>{{trainee.track_obj.name}}</td>
             <td>
+                <a href="{%url 'trainee_details' trainee.id%}">Details</a>
                 <a href="{%url 'trainee_update' trainee.id%}">Update</a>
                 <a href="{%url 'trainee_delete' trainee.id%}">Delete</a>
-                <a href="{%url 'trainee_details' trainee.id%}">Details</a>
             </td>
         </tr>
-        {%endfor%}
+        {% endfor %}
     </tbody>
 </table>
 
