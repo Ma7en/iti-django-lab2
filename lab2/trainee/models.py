@@ -18,4 +18,3 @@ class Trainee(models.Model):
     date_of_birth = models.DateField()
     account_obj = models.ForeignKey("account.Account", on_delete=models.CASCADE)
     track_obj = models.ForeignKey("track.Track", on_delete=models.CASCADE)
-

@@ -6,8 +6,8 @@ from .models import *
 # Create your views here.
 def account_list(request):
     context = {}
-    accounts = Account.objects.all()  # Fetch all records from the database
-    context["accounts"] = accounts
+    accountsobj = Account.objects.all()  # Fetch all records from the database
+    context["accounts"] = accountsobj
     return render(request, "account/list.html", context)
 
 
