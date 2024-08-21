@@ -1,10 +1,10 @@
-{% extends "./base_trainee.html" %} {% block title %}
+{% extends "base.html" %} {% block title %}
 <div>
-    <h1>create trainee</h1>
+    <h1>Create Trainee</h1>
 </div>
 {% endblock %} {% block content %}
 
-<form action="">
+<form method="POST">
     <div>
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required />

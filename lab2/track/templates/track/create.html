@@ -1,18 +1,20 @@
-{% extends "./base_track.html" %} {% block title %}
+{% extends "base.html" %} {% block title %}
 <div>
-    <h1>create track</h1>
+    <h1>Create Track</h1>
 </div>
 {% endblock %} {% block content %}
 
-<form action="">
+<form method="POST">
     <div>
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required />
     </div>
+
     <div>
         <label for="description">description:</label>
         <input type="text" id="description" name="description" required />
     </div>
+
     <div>
         <input type="submit" value="Submit" />
     </div>

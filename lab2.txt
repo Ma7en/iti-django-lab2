@@ -47,6 +47,23 @@ python manage.py createsuperuser
 // =======================================================================
 
 
+su - postgres
+
+mazen@@1
+
+psql 
+
+\du 
+# show users 
+
+
+\l
+# show database
+
+
+django
+django@@1
+
 
 
 
