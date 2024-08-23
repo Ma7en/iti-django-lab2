@@ -20,10 +20,10 @@ def track_create(request):
             and len(request.POST["name"]) <= 100
             and request.POST["description"]
         ):
-            accountobj = Track()
-            accountobj.name = request.POST["name"]
-            accountobj.description = request.POST["description"]
-            accountobj.save()
+            trackobj = Track()
+            trackobj.name = request.POST["name"]
+            trackobj.description = request.POST["description"]
+            trackobj.save()
             return redirect("track_list")
         else:
             context["error"] = "Invalid data"
